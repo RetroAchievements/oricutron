@@ -18,6 +18,11 @@
 **
 */
 
+#ifndef AVI_H
+#define AVI_H
+
+#include "SDL_system.h"
+
 #define 	AVIF_HASINDEX         0x00000010
 #define 	AVIF_MUSTUSEINDEX     0x00000020
 #define 	AVIF_ISINTERLEAVED    0x00000100
@@ -58,3 +63,4 @@ SDL_bool avi_addframe( struct avi_handle **ah, Uint8 *srcdata );
 SDL_bool avi_addaudio( struct avi_handle **ah, Sint16 *audiodata, Uint32 audiosize );
 void avi_close( struct avi_handle **ah );
 
+#endif /* AVI_H */

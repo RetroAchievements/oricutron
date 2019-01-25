@@ -18,11 +18,25 @@
 **
 **  Oric machine stuff
 */
+
+#ifndef MACHINE_H
+#define MACHINE_H
+
 #ifdef _MSC_VER
 #include <stdio.h>
 #endif
 
+extern "C"
+{
+#include "6502.h"
+#include "6551.h"
+}
+
+#include "8912.h"
+#include "disk.h"
 #include "keyboard.h"
+#include "monitor.h"
+#include "via.h"
 
 enum
 {
@@ -264,6 +278,13 @@ struct machine
   char aciabackendname[ACIA_BACKEND_NAME_LEN];
 };
 
+extern char atmosromfile[1024];
+extern char oric1romfile[1024];
+extern char mdiscromfile[1024];
+extern char jasmnromfile[1024];
+extern char pravetzromfile[2][1024];
+extern char telebankfiles[8][1024];
+
 void setromon( struct machine *oric );
 void setemumode( struct machine *oric, struct osdmenuitem *mitem, int mode );
 void video_show( struct machine *oric );
@@ -282,3 +303,5 @@ void clear_patches( struct machine *oric );
 unsigned char lightpen_read( struct m6502 *cpu, unsigned short addr );
 
 int detect_image_type(char *filename);
+
+#endif /* MACHINE_H */

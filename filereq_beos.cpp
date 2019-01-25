@@ -29,18 +29,21 @@
 #include <Messenger.h>
 #include <Path.h>
 
-extern "C" {
+extern "C"
+{
 #include "system.h"
 #include "6502.h"
+#include "6551.h"
+}
+
 #include "via.h"
 #include "8912.h"
 #include "disk.h"
 #include "gui.h"
 #include "monitor.h"
-#include "6551.h"
 #include "machine.h"
 #include "filereq.h"
-}
+
 
 
 class PanelLooper : public BLooper {

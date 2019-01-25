@@ -19,6 +19,18 @@
 **  Software rendering
 */
 
+#ifndef RENDER_SW_H
+#define RENDER_SW_H
+
+#include "gui.h"
+
+extern SDL_bool fullscreen, hwsurface;
+extern struct textzone *tz[NUM_TZ];
+extern unsigned char sgpal[];
+extern Uint8 oricpalette[];
+extern struct guiimg gimgs[NUM_GIMG];
+extern SDL_bool refreshstatus;
+
 void render_begin_sw( struct machine *oric );
 void render_end_sw( struct machine *oric );
 void render_textzone_alloc_sw( struct machine *oric, int i );
@@ -35,3 +47,5 @@ SDL_bool init_render_sw( struct machine *oric );
 void shut_render_sw( struct machine *oric );
 
 void render_sw_detectvideo( struct machine *oric );
+
+#endif /* RENDER_SW_H */

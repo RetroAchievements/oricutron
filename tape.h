@@ -18,6 +18,9 @@
 **
 */
 
+#ifndef TAPE_H
+#define TAPE_H
+
 #define TAPE_0_PULSE 416
 #define TAPE_1_PULSE 208
 
@@ -28,6 +31,10 @@
 
 #define TIME_TO_BIT(t) ((t<TAPE_DECODE_1_MIN)?-1:((t<TAPE_DECODE_0_MIN)?1:0))
 
+extern char tapefile[], tapepath[];
+extern SDL_bool refreshtape;
+extern char filetmp[];
+
 void tape_eject( struct machine *oric );
 void tape_rewind( struct machine *oric );
 SDL_bool tape_load_tap( struct machine *oric, char *fname );
@@ -37,3 +44,5 @@ void tape_patches( struct machine *oric );
 void toggletapecap( struct machine *oric, struct osdmenuitem *mitem, int dummy );
 void tape_orbchange(struct via *via);
 void tape_stop_savepatch( struct machine *oric );
+
+#endif /* TAPE_H */

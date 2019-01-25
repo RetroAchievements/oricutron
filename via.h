@@ -18,6 +18,9 @@
 **
 */
 
+#ifndef VIA_H
+#define VIA_H
+
 enum
 {
   VIA_MAIN = 0,
@@ -157,3 +160,5 @@ void via_mon_write_ifr( struct via *v, unsigned char data );
 
 // Read without side-effects for monitor
 unsigned char via_mon_read( struct via *v, int offset );
+
+#endif /* VIA_H */

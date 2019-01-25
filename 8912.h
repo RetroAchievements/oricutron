@@ -19,6 +19,14 @@
 **  General Instruments AY-8912 emulation (including oric keyboard emulation)
 */
 
+#ifndef _8912_H
+#define _8912_H
+
+extern "C"
+{
+#include "system_sdl.h"
+}
+
 // Integer fraction bits to use when mapping
 // clock cycles to audio samples
 #define FPBITS 10
@@ -103,6 +111,12 @@ struct ay8912
   struct tnchange tapelog[TAPELOG_SIZE];
 };
 
+extern SDL_AudioSpec obtained;
+extern struct avi_handle *vidcap;
+
+extern Sint16 soundsilence;
+extern SDL_bool soundavailable, soundon, warpspeed;
+
 void queuekeys( char *str );
 
 SDL_bool ay_init( struct ay8912 *ay, struct machine *oric );
@@ -119,3 +133,5 @@ void ay_modeset( struct ay8912 *ay );
 void ay_lockaudio( struct ay8912 *ay );
 void ay_unlockaudio( struct ay8912 *ay );
 void ay_flushlog( struct ay8912 *ay );
+
+#endif /* _8912_H */

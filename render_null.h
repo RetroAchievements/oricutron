@@ -19,6 +19,9 @@
 **  Dummy rendering
 */
 
+#ifndef RENDERER_NULL_H
+#define RENDERER_NULL_H
+
 void render_begin_null( struct machine *oric );
 void render_end_null( struct machine *oric );
 void render_textzone_alloc_null( struct machine *oric, int i );
@@ -32,3 +35,5 @@ SDL_bool render_togglefullscreen_null( struct machine *oric );
 void preinit_render_null( struct machine *oric );
 SDL_bool init_render_null( struct machine *oric );
 void shut_render_null( struct machine *oric );
+
+#endif /* RENDERER_NULL_H */

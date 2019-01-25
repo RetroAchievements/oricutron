@@ -36,17 +36,19 @@
 #include <String.h>
 #include <TextView.h>
 
-extern "C" {
+extern "C"
+{
 #include "system.h"
 #include "6502.h"
+#include "6551.h"
+}
+
 #include "via.h"
 #include "8912.h"
 #include "gui.h"
 #include "disk.h"
 #include "monitor.h"
-#include "6551.h"
 #include "machine.h"
-}
 
 static rgb_color oric_colors[] = {
 	{   0,   0,   0, 255 },

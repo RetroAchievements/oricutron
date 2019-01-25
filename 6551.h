@@ -19,6 +19,9 @@
 **  6551 ACIA emulation
 */
 
+#ifndef _6551_H
+#define _6551_H
+
 // Registers
 enum
 {
@@ -146,3 +149,5 @@ SDL_bool acia_init_modem( struct acia* acia );
 SDL_bool acia_init_com( struct acia* acia );
 #endif
 
+
+#endif /* _6551_H */

@@ -19,6 +19,9 @@
 **  File requester
 */
 
+#ifndef FILE_REQ_H
+#define FILE_REQ_H
+
 enum
 {
   FR_DISKLOAD=0,
@@ -38,3 +41,4 @@ SDL_bool init_filerequester( struct machine *oric );
 void shut_filerequester( struct machine *oric );
 SDL_bool filerequester( struct machine *oric, char *title, char *path, char *fname, int type );
 
+#endif /* FILE_REQ_H */

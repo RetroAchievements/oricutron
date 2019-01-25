@@ -1,6 +1,6 @@
 /*
 **  Oricutron
-**  Copyright (C) 2009-2010 Peter Gordon
+**  Copyright (C) 2009-2014 Peter Gordon
 **
 **  This program is free software; you can redistribute it and/or
 **  modify it under the terms of the GNU General Public License
@@ -16,7 +16,7 @@
 **  along with this program; if not, write to the Free Software
 **  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **
-**  BeOS message box
+**  SDL based message box
 */
 
 #include <stdlib.h>
@@ -25,7 +25,8 @@
 #include <unistd.h>
 #include <dirent.h>
 #include <sys/stat.h>
-#include <Alert.h>
+
+#include <gtk/gtk.h>
 
 extern "C"
 {
@@ -42,8 +43,12 @@ extern "C"
 #include "machine.h"
 #include "msgbox.h"
 
+extern SDL_bool fullscreen;
+void togglefullscreen( struct machine *oric, struct osdmenuitem *mitem, int dummy );
+
 SDL_bool init_msgbox( struct machine *oric )
 {
+  // We rely on init_filerequester to call gtk_init()
   return SDL_TRUE;
 }
 
@@ -53,20 +58,42 @@ void shut_msgbox( struct machine *oric )
 
 SDL_bool msgbox( struct machine *oric, int type, char *msg )
 {
+  GtkWidget *dialog = NULL;
+  GtkButtonsType btns = GTK_BUTTONS_OK;
+  GtkMessageType mtyp = GTK_MESSAGE_INFO;
+  SDL_bool result = SDL_FALSE;
+  gint res;
+  SDL_bool was_fullscreen = fullscreen;
+
+  if (fullscreen)
+    togglefullscreen(oric, NULL, 0);
+
   switch( type )
   {
     case MSGBOX_YES_NO:
-      return ((new BAlert("Oricutron Request", msg, "Yes", "No"))->Go() == 0) ? SDL_TRUE : SDL_FALSE;
-//      return (MessageBoxA( hwnd, msg, "Oriculator Request", MB_YESNO ) == IDYES);
+      btns = GTK_BUTTONS_YES_NO;
+      mtyp = GTK_MESSAGE_QUESTION;
+      break;
 
     case MSGBOX_OK_CANCEL:
-      return ((new BAlert("Oricutron Request", msg, "Ok", "Cancel"))->Go() == 0) ? SDL_TRUE : SDL_FALSE;
-//      return (MessageBoxA( hwnd, msg, "Oriculator Request", MB_OKCANCEL ) == IDOK);
-    
-    case MSGBOX_OK:
-      (new BAlert("Oricutron Request", msg, "Ok"))->Go();
-      return SDL_TRUE;
+      btns = GTK_BUTTONS_OK_CANCEL;
+      break;
+
+    default:
+      break;
   }
 
-  return SDL_TRUE;
+  dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, mtyp, btns, "%s", msg);
+  res = gtk_dialog_run(GTK_DIALOG (dialog));
+  if ((res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES) || (res == GTK_RESPONSE_ACCEPT))
+    result = SDL_TRUE;
+  
+  gtk_widget_destroy(dialog);
+  while (gtk_events_pending())
+    gtk_main_iteration();
+
+  if (was_fullscreen)
+    togglefullscreen(oric, NULL, 0);
+
+  return result;
 }

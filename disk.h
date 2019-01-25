@@ -19,6 +19,9 @@
 **  WD17xx, Microdisc and Jasmin emulation
 */
 
+#ifndef DISK_H
+#define DISK_H
+
 /******************** MICRODISC *********************/
 #define MAX_DRIVES 4
 
@@ -204,7 +207,13 @@ struct pravetz
   struct pravetz_drive drv[MAX_DRIVES];
 };
 
+extern char diskfile[], diskpath[], filetmp[];
+extern char telediskfile[], telediskpath[];
+extern char pravdiskfile[], pravdiskpath[];
+extern SDL_bool refreshdisks;
+
 // Functions to read/write diskimages
+void disk_eject( struct machine *oric, int drive );
 SDL_bool diskimage_load( struct machine *oric, char *fname, int drive ); 
 SDL_bool diskimage_save( struct machine *oric, char *fname, int drive );
 void diskimage_cachetrack( struct diskimage *dimg, int track, int side );
@@ -230,3 +239,5 @@ void pravetz_init( struct pravetz *p, struct machine *oric );
 void pravetz_free( struct pravetz *p );
 unsigned char pravetz_read( struct pravetz *p, unsigned short addr );
 void pravetz_write( struct pravetz *p, unsigned short addr, unsigned char data );
+
+#endif /* DISK_H */

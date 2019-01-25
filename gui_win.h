@@ -16,14 +16,17 @@
 **  along with this program; if not, write to the Free Software
 **  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **
-**  Snapshot saving & loading
-**
+**  Windows GUI
 */
 
-#ifndef SNAPSHOT_H
-#define SNAPSHOT_H
+#ifndef GUI_WIN_H
+#define GUI_WIN_H
 
-SDL_bool save_snapshot(struct machine *oric, char *filename);
-SDL_bool load_snapshot(struct machine *oric, char *filename);
+#ifdef WIN32
+#include <windows.h>
+#define WANT_WMINFO
+#endif
 
-#endif /* SNAPSHOT_H */
+extern HWND g_SDL_Window;
+
+#endif /* GUI_WIN_H */

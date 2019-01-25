@@ -19,7 +19,20 @@
 **  OpenGL rendering
 */
 
+#ifndef RENDER_GL_H
+#define RENDER_GL_H
+
+#include "gui.h"
+
 #ifdef __OPENGL_AVAILABLE__
+
+extern SDL_bool refreshstatus;
+
+extern unsigned char sgpal[];
+extern SDL_bool fullscreen;
+extern struct textzone *tz[NUM_TZ];
+extern Uint8 oricpalette[];
+extern struct guiimg gimgs[NUM_GIMG];
 
 void render_begin_gl( struct machine *oric );
 void render_end_gl( struct machine *oric );
@@ -36,3 +49,5 @@ SDL_bool render_togglefullscreen_gl( struct machine *oric );
 void shut_render_gl( struct machine *oric );
 
 #endif //__OPENGL_AVAILABLE__
+
+#endif /* RENDER_GL_H */

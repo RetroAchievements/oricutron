@@ -19,6 +19,11 @@
 **  6502 emulation header
 */
 
+#ifndef _6502_H
+#define _6502_H
+
+#include "SDL_stdinc.h"
+
 // 6502 flag bits
 #define FB_C 0
 #define FF_C (1<<FB_C)
@@ -103,4 +108,6 @@ void m6502_init( struct m6502 *cpu, void *userdata, SDL_bool nukebreakpoints );
 void m6502_reset( struct m6502 *cpu );
 SDL_bool m6502_inst( struct m6502 *cpu );
 SDL_bool m6502_set_icycles( struct m6502 *cpu, SDL_bool dobp, char *bpmsg );
+
+#endif /* _6502_H */
 

@@ -19,6 +19,18 @@
 **  Software rendering
 */
 
+#ifndef RENDER_SW8_H
+#define RENDER_SW8_H
+
+#include "gui.h"
+
+extern SDL_bool fullscreen, hwsurface;
+extern struct textzone *tz[NUM_TZ];
+extern unsigned char sgpal[];
+extern Uint8 oricpalette[];
+extern struct guiimg gimgs[NUM_GIMG];
+extern SDL_bool refreshstatus;
+
 void render_begin_sw8( struct machine *oric );
 void render_end_sw8( struct machine *oric );
 void render_textzone_alloc_sw8( struct machine *oric, int i );
@@ -33,3 +45,4 @@ void preinit_render_sw8( struct machine *oric );
 SDL_bool init_render_sw8( struct machine *oric );
 void shut_render_sw8( struct machine *oric );
 
+#endif /* RENDER_SW8_H */

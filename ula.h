@@ -19,6 +19,12 @@
 **  Oric video ULA
 */
 
+#ifndef ULA_H
+#define ULA_H
+
+extern struct avi_handle *vidcap;
+extern SDL_bool warpspeed;
+
 void preinit_ula( struct machine *oric );
 SDL_bool init_ula( struct machine *oric );
 void shut_ula( struct machine *oric );
@@ -26,3 +32,5 @@ SDL_bool ula_doraster( struct machine *oric );
 void ula_powerup_default( struct machine *oric );
 void ula_renderscreen( struct machine *oric );
 void ula_set_dirty( struct machine *oric );
+
+#endif /* ULA_H */

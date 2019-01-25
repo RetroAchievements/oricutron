@@ -18,7 +18,23 @@
 **
 */
 
+#ifndef MAIN_H
+#define MAIN_H
+
+extern SDL_bool warpspeed, soundon;
+extern char mon_bpmsg[];
+extern struct avi_handle *vidcap;
+extern char tapepath[], diskpath[], telediskpath[], pravdiskpath[];
+extern char atmosromfile[];
+extern char oric1romfile[];
+extern char mdiscromfile[];
+extern char jasmnromfile[];
+extern char pravetzromfile[2][1024];
+extern char telebankfiles[8][1024];
+
 SDL_bool read_config_string( char *buf, char *token, char *dest, Sint32 maxlen );
 SDL_bool read_config_bool( char *buf, char *token, SDL_bool *dest );
 SDL_bool read_config_option( char *buf, char *token, Sint32 *dest, char **options );
 SDL_bool read_config_int( char *buf, char *token, int *dest, int min, int max );
+
+#endif /* MAIN_H */

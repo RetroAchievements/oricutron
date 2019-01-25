@@ -19,6 +19,9 @@
 **  GUI
 */
 
+#ifndef GUI_H
+#define GUI_H
+
 // Render modes available
 enum
 {
@@ -118,6 +121,12 @@ enum
 
 #define NUM_GUI_COLS 16
 
+extern SDL_bool fullscreen;
+extern struct avi_handle *vidcap;
+
+extern SDL_bool need_sdl_quit;
+extern Uint32 cyclespersample;
+
 SDL_bool alloc_textzone( struct machine *oric, int i, int x, int y, int w, int h, char *title );
 void free_textzone( struct machine *oric, int i );
 SDL_bool in_textzone( struct textzone *tz, int x, int y );
@@ -139,6 +148,7 @@ SDL_bool menu_event( SDL_Event *ev, struct machine *oric, SDL_bool *needrender )
 void setmenutoggles( struct machine *oric );
 void set_render_mode( struct machine *oric, int whichrendermode );
 
+void do_popup(struct machine *oric, char *str);
 void render( struct machine *oric );
 void preinit_gui( struct machine *oric );
 SDL_bool init_gui( struct machine *oric, Sint32 rendermode );
@@ -173,3 +183,5 @@ void togglefullscreen( struct machine *oric, struct osdmenuitem *mitem, int dumm
 void softresetoric( struct machine *oric, struct osdmenuitem *mitem, int dummy );
 
 void pravdiskboot( struct machine *oric );
+
+#endif /* GUI_H */

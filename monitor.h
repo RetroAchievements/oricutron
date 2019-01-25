@@ -19,8 +19,11 @@
 **  Monitor/Debugger
 */
 
+#ifndef MONITOR_H
+#define MONITOR_H
+
 #define SNAME_LEN 11              // Short name for symbols (with ...)
-#define SSNAME_LEN (SNAME_LEN-3)  // Short short name :)
+#define SSNAME_LEN (SNAME_LEN-2)  // Short short name :)
 
 #define SYMB_ROMDIS0   0
 #define SYMF_ROMDIS0   (1<<SYMB_ROMDIS0)
@@ -66,6 +69,11 @@ struct symboltable
   struct msym *syms;
 };
 
+extern struct textzone *tz[];
+extern char vsptmp[];
+extern char snappath[], filetmp[];
+extern SDL_bool refreshstatus;
+
 SDL_bool isws( char c );
 SDL_bool ishex( char c );
 int hexit( char c );
@@ -101,3 +109,5 @@ struct cpu_trace_entry
 void mon_traceinst(struct m6502 *cpu);
 void dump_cputrace(struct machine *oric);
 #endif
+
+#endif /* MONITOR_H */

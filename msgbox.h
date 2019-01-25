@@ -19,6 +19,9 @@
 **  Message Box
 */
 
+#ifndef MSG_BOX_H
+#define MSG_BOX_H
+
 enum
 {
   MSGBOX_YES_NO = 0,
@@ -30,3 +33,4 @@ SDL_bool init_msgbox( struct machine *oric );
 void shut_msgbox( struct machine *oric );
 SDL_bool msgbox( struct machine *oric, int type, char *msg );
 
+#endif /* MSG_BOX_H */

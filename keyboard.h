@@ -21,6 +21,11 @@
 #ifndef KEYBOARD_H
 #define KEYBOARD_H
 
+extern "C"
+{
+  #include "system_sdl.h"
+}
+
 struct kbdkey
 {
   int x, y, w, h;

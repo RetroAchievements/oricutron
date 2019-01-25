@@ -19,6 +19,9 @@
 **  Joystick definitions
 */
 
+#ifndef JOYSTICK_H
+#define JOYSTICK_H
+
 // Joystick interface types
 enum
 {
@@ -53,3 +56,5 @@ Sint16 joy_keyname_to_sym( char *name );
 void joy_setup( struct machine *oric );
 SDL_bool joy_filter_event( SDL_Event *ev, struct machine *oric );
 void joy_buildmask( struct machine *oric );
+
+#endif /* JOYSTICK_H */

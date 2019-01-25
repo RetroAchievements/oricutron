@@ -1,6 +1,6 @@
 /*
 **  Oricutron
-**  Copyright (C) 2009-2010 Peter Gordon
+**  Copyright (C) 2009-2014 Peter Gordon
 **
 **  This program is free software; you can redistribute it and/or
 **  modify it under the terms of the GNU General Public License
@@ -16,16 +16,10 @@
 **  along with this program; if not, write to the Free Software
 **  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **
-**  BeOS message box
+**  Amiga OS2.x message box
 */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
-#include <dirent.h>
-#include <sys/stat.h>
-#include <Alert.h>
+#include <proto/intuition.h>
 
 extern "C"
 {
@@ -53,20 +47,29 @@ void shut_msgbox( struct machine *oric )
 
 SDL_bool msgbox( struct machine *oric, int type, char *msg )
 {
+  char *btns = "OK|Cancel";
+  struct EasyStruct myES =
+    {
+    sizeof(struct EasyStruct),
+    0,
+    "Oricutron Request",
+    msg,
+    btns,
+    };
+
   switch( type )
   {
     case MSGBOX_YES_NO:
-      return ((new BAlert("Oricutron Request", msg, "Yes", "No"))->Go() == 0) ? SDL_TRUE : SDL_FALSE;
-//      return (MessageBoxA( hwnd, msg, "Oriculator Request", MB_YESNO ) == IDYES);
+      strcpy(btns, "Yes|No");
+      break;
+
+    case MSGBOX_OK:
+      strcpy(btns, "OK");
+      break;
 
     case MSGBOX_OK_CANCEL:
-      return ((new BAlert("Oricutron Request", msg, "Ok", "Cancel"))->Go() == 0) ? SDL_TRUE : SDL_FALSE;
-//      return (MessageBoxA( hwnd, msg, "Oriculator Request", MB_OKCANCEL ) == IDOK);
-    
-    case MSGBOX_OK:
-      (new BAlert("Oricutron Request", msg, "Ok"))->Go();
-      return SDL_TRUE;
+      break;
   }
 
-  return SDL_TRUE;
+  return EasyRequest(NULL, &myES, NULL);
 }
