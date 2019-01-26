@@ -1446,6 +1446,11 @@ int main( int argc, char *argv[] )
 
         if( framedone )
         {
+#if USE_RETROACHIEVEMENTS
+            RA_HandleHTTPResults();
+
+            RA_DoAchievementsFrame();
+#endif
           nextframe_us += oric.vid_freq ? 20000LL : 16667LL;
           nextframe_ms = (Uint32)(nextframe_us/1000LL);
 

@@ -52,7 +52,7 @@ unsigned char MainRAMReader(size_t nOffs)
 
 void MainRAMWriter(size_t nOffs, unsigned char nVal)
 {
-    active_machine->mem[nOffs] = nVal;
+    *(active_machine->mem + nOffs) = nVal;
 }
 
 
