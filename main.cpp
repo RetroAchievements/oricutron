@@ -1513,6 +1513,11 @@ int main( int argc, char *argv[] )
 #if USE_RETROACHIEVEMENTS
           RA_HandleHTTPResults();
           RA_DoAchievementsFrame();
+
+          // Push a dummy SDL event to redraw window content
+          SDL_Event wm_event = SDL_Event();
+          wm_event.type = SDL_WINDOWEVENT;
+          SDL_PushEvent(&wm_event);
 #endif
           framedone = SDL_FALSE;
         }
