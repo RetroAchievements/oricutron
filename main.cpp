@@ -1435,6 +1435,14 @@ int main( int argc, char *argv[] )
           break;
       }
 
+#if USE_RETROACHIEVEMENTS
+      if (oric.emu_mode == EM_DEBUG)
+      {
+          if (!RA_WarnDisableHardcore("enter debug mode"))
+              oric.emu_mode = EM_RUNNING;
+      }
+#endif
+
       if( oric.emu_mode == EM_RUNNING )
       {
         if( oric.overclockmult==1 )
