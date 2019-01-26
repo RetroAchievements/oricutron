@@ -131,7 +131,7 @@ struct via
 #define VIRQB_T1 6
 #define VIRQF_T1 (1<<VIRQB_T1)
 
-void tape_eject( struct machine *oric );
+SDL_bool tape_eject( struct machine *oric );
 void tape_rewind( struct machine *oric );
 SDL_bool tape_load_tap( struct machine *oric, char *fname );
 void tape_ticktock( struct machine *oric, int cycles );

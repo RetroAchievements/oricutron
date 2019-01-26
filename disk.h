@@ -213,7 +213,7 @@ extern char pravdiskfile[], pravdiskpath[];
 extern SDL_bool refreshdisks;
 
 // Functions to read/write diskimages
-void disk_eject( struct machine *oric, int drive );
+SDL_bool disk_eject( struct machine *oric, int drive );
 SDL_bool diskimage_load( struct machine *oric, char *fname, int drive ); 
 SDL_bool diskimage_save( struct machine *oric, char *fname, int drive );
 void diskimage_cachetrack( struct diskimage *dimg, int track, int side );

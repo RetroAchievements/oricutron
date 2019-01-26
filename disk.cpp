@@ -184,8 +184,19 @@ struct diskimage *diskimage_alloc( Uint32 rawimglen )
 }
 
 // Eject a disk from a drive
-void disk_eject( struct machine *oric, int drive )
+SDL_bool disk_eject( struct machine *oric, int drive )
 {
+#if USE_RETROACHIEVEMENTS
+    if (drive == 0 && loaded_title != NULL &&
+        loaded_title->file_type == FileType::DISK)
+    {
+        if (!confirmed_quitting && !RA_ConfirmLoadNewRom(false))
+        {
+            return SDL_FALSE;
+        }
+    }
+#endif
+
   diskimage_free( oric, &oric->wddisk.disk[drive] );
   oric->pravetz.drv[drive].pimg  = NULL;
   oric->pravetz.drv[drive].byte  = 0;
@@ -193,6 +204,18 @@ void disk_eject( struct machine *oric, int drive )
   oric->pravetz.drv[drive].half_track = 0;
   oric->diskname[drive][0] = 0;
   disk_popup( oric, drive );
+
+#if USE_RETROACHIEVEMENTS
+  if (drive == 0)
+  {
+#if !RA_RELOAD_MULTI_DISK
+      if (loaded_title != NULL && loaded_title->title_id != loading_file.title_id)
+#endif
+          RA_OnGameClose(FileType::DISK);
+  }
+#endif
+
+  return SDL_TRUE;
 }
 
 // Whenever a seek operation occurs, the track where the head ends up
@@ -335,7 +358,8 @@ SDL_bool diskimage_load( struct machine *oric, char *fname, int drive )
 #endif
 
   // The file exists, so eject any currently inserted disk
-  disk_eject( oric, drive );
+  if (!disk_eject(oric, drive))
+      return SDL_FALSE;
 
   // Determine the size of the disk image
   fseek( f, 0, SEEK_END );

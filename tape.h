@@ -35,7 +35,7 @@ extern char tapefile[], tapepath[];
 extern SDL_bool refreshtape;
 extern char filetmp[];
 
-void tape_eject( struct machine *oric );
+SDL_bool tape_eject( struct machine *oric );
 void tape_rewind( struct machine *oric );
 SDL_bool tape_load_tap( struct machine *oric, char *fname );
 void tape_ticktock( struct machine *oric, int cycles );

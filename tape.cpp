@@ -265,14 +265,34 @@ void tape_setmotor( struct machine *oric, SDL_bool motoron )
 }
 
 // Free up the current tape image
-void tape_eject( struct machine *oric )
+SDL_bool tape_eject( struct machine *oric )
 {
-  if( oric->tapebuf ) free( oric->tapebuf );
+  if (!oric->tapebuf)
+      return SDL_TRUE;
+
+#if USE_RETROACHIEVEMENTS
+  if (loaded_title != NULL &&
+      loaded_title->file_type == FileType::TAPE)
+  {
+      if (!confirmed_quitting && !RA_ConfirmLoadNewRom(false))
+      {
+          return SDL_FALSE;
+      }
+  }
+#endif
+
+  free(oric->tapebuf);
   oric->tapebuf = NULL;
   oric->tapelen = 0;
   oric->tapename[0] = 0;
   tape_popup( oric );
   refreshtape = SDL_TRUE;
+
+#if USE_RETROACHIEVEMENTS
+  RA_OnGameClose(FileType::TAPE);
+#endif
+
+  return SDL_TRUE;
 }
 
 void tape_next_raw_count( struct machine *oric )
@@ -994,7 +1014,8 @@ SDL_bool tape_load_tap( struct machine *oric, char *fname )
 #endif
 
   // Eject any old image
-  tape_eject( oric );
+  if (!tape_eject(oric))
+      return SDL_FALSE;
 
   // Get the image size
   fseek( f, 0, SEEK_END );
