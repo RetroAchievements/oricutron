@@ -1336,7 +1336,8 @@ void loadsnap( struct machine *oric, struct osdmenuitem *mitem, int dummy )
   if( !filerequester( oric, "Load Snapshot", snappath, snapfile, FR_SNAPSHOTLOAD ) ) return;
 
 #if USE_RETROACHIEVEMENTS
-  if (!RA_WarnDisableHardcore("load a state"));
+  if (!RA_WarnDisableHardcore("load a state"))
+      return;
 #endif
 
   joinpath( snappath, snapfile );
