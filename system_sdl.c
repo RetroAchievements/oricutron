@@ -367,7 +367,16 @@ int SDL_COMPAT_WM_ToggleFullScreen(SDL_Surface *surface)
 #if SDL_MAJOR_VERSION == 1
 SDL_Surface* SDL_COMPAT_SetVideoMode(int width, int height, int bitsperpixel, Uint32 flags)
 {
-  return SDL_SetVideoMode(width, height, bitsperpixel, flags);
+    int window_height = height;
+#if USE_MENUBAR
+    // No menubar support with the OpenGL renderer
+    if (flags ^ SDL_COMPAT_OPENGL)
+    {
+        window_height += 20;
+    }
+#endif
+
+  return SDL_SetVideoMode(width, window_height, bitsperpixel, flags);
 }
 #else
 SDL_Surface* SDL_COMPAT_SetVideoMode(int width, int height, int bitsperpixel, Uint32 flags)
