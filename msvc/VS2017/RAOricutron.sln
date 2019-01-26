@@ -17,16 +17,16 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{89EA5DFF-F149-4A3C-9F9F-DD152D43934E}.Debug|Win32.ActiveCfg = DebugAchievements|Win32
 		{89EA5DFF-F149-4A3C-9F9F-DD152D43934E}.Debug|Win32.Build.0 = DebugAchievements|Win32
-		{89EA5DFF-F149-4A3C-9F9F-DD152D43934E}.Debug|x64.ActiveCfg = DebugAchievements|x64
-		{89EA5DFF-F149-4A3C-9F9F-DD152D43934E}.Debug|x64.Build.0 = DebugAchievements|x64
-		{89EA5DFF-F149-4A3C-9F9F-DD152D43934E}.Debug|x86.ActiveCfg = DebugAchievements|Win32
-		{89EA5DFF-F149-4A3C-9F9F-DD152D43934E}.Debug|x86.Build.0 = DebugAchievements|Win32
+		{89EA5DFF-F149-4A3C-9F9F-DD152D43934E}.Debug|x64.ActiveCfg = Debug|x64
+		{89EA5DFF-F149-4A3C-9F9F-DD152D43934E}.Debug|x64.Build.0 = Debug|x64
+		{89EA5DFF-F149-4A3C-9F9F-DD152D43934E}.Debug|x86.ActiveCfg = Debug|Win32
+		{89EA5DFF-F149-4A3C-9F9F-DD152D43934E}.Debug|x86.Build.0 = Debug|Win32
 		{89EA5DFF-F149-4A3C-9F9F-DD152D43934E}.Release|Win32.ActiveCfg = ReleaseAchievements|Win32
 		{89EA5DFF-F149-4A3C-9F9F-DD152D43934E}.Release|Win32.Build.0 = ReleaseAchievements|Win32
-		{89EA5DFF-F149-4A3C-9F9F-DD152D43934E}.Release|x64.ActiveCfg = ReleaseAchievements|x64
-		{89EA5DFF-F149-4A3C-9F9F-DD152D43934E}.Release|x64.Build.0 = ReleaseAchievements|x64
-		{89EA5DFF-F149-4A3C-9F9F-DD152D43934E}.Release|x86.ActiveCfg = ReleaseAchievements|Win32
-		{89EA5DFF-F149-4A3C-9F9F-DD152D43934E}.Release|x86.Build.0 = ReleaseAchievements|Win32
+		{89EA5DFF-F149-4A3C-9F9F-DD152D43934E}.Release|x64.ActiveCfg = Release|x64
+		{89EA5DFF-F149-4A3C-9F9F-DD152D43934E}.Release|x64.Build.0 = Release|x64
+		{89EA5DFF-F149-4A3C-9F9F-DD152D43934E}.Release|x86.ActiveCfg = Release|Win32
+		{89EA5DFF-F149-4A3C-9F9F-DD152D43934E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
