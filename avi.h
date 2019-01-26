@@ -21,7 +21,10 @@
 #ifndef AVI_H
 #define AVI_H
 
+#if SDL_MAJOR_VERSION == 1
+#else
 #include "SDL_system.h"
+#endif
 
 #define 	AVIF_HASINDEX         0x00000010
 #define 	AVIF_MUSTUSEINDEX     0x00000020

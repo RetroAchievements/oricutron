@@ -50,6 +50,7 @@ extern "C"
 #include "system.h"
 #include "6551.h"
 #include "6502.h"
+#include "msvc/strcasecmp.h"
 }
 
 #include "via.h"
@@ -1364,6 +1365,8 @@ void once_per_frame( struct machine *oric )
   }
 }
 
+#undef main // Disregard the SDL1 main redefinition
+
 int main( int argc, char *argv[] )
 {
   static struct machine oric;
@@ -1524,7 +1527,7 @@ int main( int argc, char *argv[] )
 
           // Push a dummy SDL event to redraw window content
           SDL_Event wm_event = SDL_Event();
-          wm_event.type = SDL_WINDOWEVENT;
+          wm_event.type = SDL_USEREVENT;
           SDL_PushEvent(&wm_event);
 #endif
           framedone = SDL_FALSE;
@@ -1548,10 +1551,13 @@ int main( int argc, char *argv[] )
         {
 #if USE_RETROACHIEVEMENTS
           case SDL_SYSWMEVENT:
+#if SDL_MAJOR_VERSION == 1
+            if (event.syswm.msg->msg == WM_COMMAND)
+                RA_HandleMenuEvent(event.syswm.msg->wParam);
+#else
             if (event.syswm.msg->msg.win.msg == WM_COMMAND)
-            {
                 RA_HandleMenuEvent(event.syswm.msg->msg.win.wParam);
-            }
+#endif
             break;
 #endif
           case SDL_COMPAT_ACTIVEEVENT:

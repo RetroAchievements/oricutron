@@ -2393,7 +2393,12 @@ SDL_bool init_gui( struct machine *oric, Sint32 rendermode )
   wanted.channels = 2; /* 1 = mono, 2 = stereo */
   wanted.samples  = AUDIO_BUFLEN;
 
+#if SDL_MAJOR_VERSION == 1
+  typedef void(*Callback)(void *, Uint8 *, int);
+  wanted.callback = (Callback)ay_callback;
+#else
   wanted.callback = (SDL_AudioCallback)ay_callback;
+#endif
   wanted.userdata = &oric->ay;
 
   soundavailable = SDL_FALSE;
