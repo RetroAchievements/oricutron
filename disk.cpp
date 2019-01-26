@@ -33,6 +33,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <shlwapi.h>
 
 extern "C"
 {
@@ -50,6 +51,10 @@ extern "C"
 #include "monitor.h"
 #include "gui.h"
 #include "disk.h"
+
+#if USE_RETROACHIEVEMENTS
+#include "retroachievements.h"
+#endif
 
 #define GENERAL_DISK_DEBUG 0
 #define DEBUG_SECTOR_DUMP  0
@@ -321,6 +326,14 @@ SDL_bool diskimage_load( struct machine *oric, char *fname, int drive )
   f = fopen( fname, "rb" );
   if( !f ) return SDL_FALSE;
 
+#if USE_RETROACHIEVEMENTS
+  if (drive == 0)
+  {
+      if (!RA_PrepareLoadNewRom(fname, FileType::DISK))
+          return SDL_FALSE;
+  }
+#endif
+
   // The file exists, so eject any currently inserted disk
   disk_eject( oric, drive );
 
@@ -433,9 +446,37 @@ SDL_bool diskimage_load( struct machine *oric, char *fname, int drive )
   oric->wddisk.disk[drive]->modified = SDL_FALSE;
   oric->wddisk.disk[drive]->modified_time = 0;
 
+  // Create a local runtime copy or load an existing one
+  HMODULE hModule = GetModuleHandle(NULL);
+  CHAR path[MAX_PATH];
+  GetModuleFileName(hModule, path, MAX_PATH);
+
+  if (!PathRemoveFileSpec(path))
+      return SDL_FALSE;
+
+  PathAppend(path, "save");
+
+  CreateDirectory(path, NULL);
+
+  CHAR filename[_MAX_FNAME];
+  CHAR extension[_MAX_EXT];
+  _splitpath(fname, NULL, NULL, filename, extension);
+
+  PathAppend(path, StrCat(filename, extension));
+
+  CHAR old_path[MAX_PATH], new_path[MAX_PATH];
+  PathCanonicalize(old_path, fname);
+  PathCanonicalize(new_path, path);
+  if (strcmp(old_path, new_path))
+  {
+      if (!PathFileExists(path) &&
+          !CopyFile(fname, path, true))
+          return SDL_FALSE;
+  }
+
   // Remember the filename of the image for this drive
-  strncpy( oric->wddisk.disk[drive]->filename, fname, 4096+512 );
-  oric->wddisk.disk[drive]->filename[4096+511] = 0;
+  strncpy(oric->wddisk.disk[drive]->filename, new_path, 4096 + 512);
+  oric->wddisk.disk[drive]->filename[4096 + 511] = 0;
 
   // Come up with a suitable short name for popups etc.
   if( strlen( fname ) > 31 )
@@ -452,6 +493,11 @@ SDL_bool diskimage_load( struct machine *oric, char *fname, int drive )
 
   // Mark the disk status icons as needing a refresh
   refreshdisks = SDL_TRUE;
+
+#if USE_RETROACHIEVEMENTS
+  RA_CommitLoadNewRom();
+#endif
+
   return SDL_TRUE;
 };
 

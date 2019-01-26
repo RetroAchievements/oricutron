@@ -40,6 +40,10 @@ extern "C"
 #include "disk.h"
 #include "tape.h"
 
+#if USE_RETROACHIEVEMENTS
+#include "retroachievements.h"
+#endif
+
 char tmptapename[4096];
 
 // Pop-up the name of the currently inserted tape
@@ -984,6 +988,11 @@ SDL_bool tape_load_tap( struct machine *oric, char *fname )
   f = fopen( fname, "rb" );
   if( !f ) return SDL_FALSE;
 
+#if USE_RETROACHIEVEMENTS
+  if (!RA_PrepareLoadNewRom(fname, FileType::TAPE))
+      return SDL_FALSE;
+#endif
+
   // Eject any old image
   tape_eject( oric );
 
@@ -1067,6 +1076,10 @@ SDL_bool tape_load_tap( struct machine *oric, char *fname )
 
   // Show it in the popup
   tape_popup( oric );
+
+#if USE_RETROACHIEVEMENTS
+  RA_CommitLoadNewRom();
+#endif
 
   return SDL_TRUE;
 }
