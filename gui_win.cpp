@@ -72,6 +72,9 @@ static void init_clipboard(void)
     // Create an empty menu bar to hold the RetroAchievements menu
     HMENU menubar = CreateMenu();
     SetMenu(g_SDL_Window, menubar);
+
+    // Enable WinAPI events processing
+    SDL_EventState(SDL_SYSWMEVENT, SDL_ENABLE);
 #endif
 
     initialized = SDL_TRUE;
@@ -199,23 +202,4 @@ SDL_bool clipboard_paste( struct machine *oric )
     queuekeys(text);
   }
   return SDL_TRUE;
-}
-
-LRESULT CALLBACK WndProc(_In_ HWND hwnd, _In_ UINT uMsg, _In_ WPARAM wParam, _In_ LPARAM lParam)
-{
-    switch (uMsg)
-    {
-    case WM_COMMAND:
-#if USE_RETROACHIEVEMENTS
-        RA_HandleMenuEvent(wParam);
-#endif
-        break;
-    case WM_QUIT:
-        return 0;
-
-    default:
-        return DefWindowProcW(hwnd, uMsg, wParam, lParam);
-    }
-
-    return NULL;
 }

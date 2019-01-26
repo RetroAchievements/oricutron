@@ -1518,6 +1518,14 @@ int main( int argc, char *argv[] )
       do {
         switch( event.type )
         {
+#if USE_RETROACHIEVEMENTS
+          case SDL_SYSWMEVENT:
+            if (event.syswm.msg->msg.win.msg == WM_COMMAND)
+            {
+                RA_HandleMenuEvent(LOWORD(event.syswm.msg->msg.win.wParam));
+            }
+            break;
+#endif
           case SDL_COMPAT_ACTIVEEVENT:
             {
                 if(SDL_COMPAT_IsAppActive(&event))
