@@ -380,7 +380,11 @@ SDL_Surface* SDL_COMPAT_SetVideoMode(int width, int height, int bitsperpixel, Ui
 
   int window_height = g_height;
 #if USE_MENUBAR
-  window_height += 20;
+  // No menubar support with the OpenGL renderer
+  if (flags ^ SDL_COMPAT_OPENGL)
+  {
+      window_height += 20;
+  }
 #endif
 
   g_window = SDL_CreateWindow("oricutron", g_lastx, g_lasty,
