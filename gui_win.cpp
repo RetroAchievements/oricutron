@@ -39,6 +39,10 @@ extern "C"
 #include "monitor.h"
 #include "gui_win.h"
 
+#if USE_RETROACHIEVEMENTS
+#include "retroachievements.h"
+#endif
+
 #include <shellapi.h>
 
 HWND g_SDL_Window;
@@ -63,6 +67,13 @@ static void init_clipboard(void)
 #else
     g_SDL_Window = info.info.win.window;
 #endif
+
+#if USE_RETROACHIEVEMENTS
+    // Create an empty menu bar to hold the RetroAchievements menu
+    HMENU menubar = CreateMenu();
+    SetMenu(g_SDL_Window, menubar);
+#endif
+
     initialized = SDL_TRUE;
     }
 }

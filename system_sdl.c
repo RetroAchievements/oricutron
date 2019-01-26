@@ -378,8 +378,13 @@ SDL_Surface* SDL_COMPAT_SetVideoMode(int width, int height, int bitsperpixel, Ui
 
   FreeResources();
 
+  int window_height = g_height;
+#if USE_MENUBAR
+  window_height += 20;
+#endif
+
   g_window = SDL_CreateWindow("oricutron", g_lastx, g_lasty,
-                              g_width, g_height, flags);
+                              g_width, window_height, flags);
   if(g_icon)
     SDL_SetWindowIcon(g_window, g_icon);
 
@@ -398,6 +403,17 @@ SDL_Surface* SDL_COMPAT_SetVideoMode(int width, int height, int bitsperpixel, Ui
                                   SDL_TEXTUREACCESS_STREAMING,
                                   g_width, g_height);
   }
+
+  SDL_Rect drawing_area;
+  drawing_area.x = 0;
+  drawing_area.y = 0;
+  drawing_area.w = g_width;
+  drawing_area.h = g_height;
+#if USE_MENUBAR
+  drawing_area.y += 20;
+#endif
+
+  SDL_RenderSetViewport(g_renderer, &drawing_area);
 
   return g_screen;
 }
