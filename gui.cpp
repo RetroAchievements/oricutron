@@ -1353,6 +1353,10 @@ void softresetoric(struct machine *oric, struct osdmenuitem *mitem, int dummy)
   oric->cpu.nmi = SDL_TRUE;
   oric->cpu.nmicount = 2;
   setemumode(oric, NULL, EM_RUNNING);
+
+#if USE_RETROACHIEVEMENTS
+  RA_ProcessReset();
+#endif
 }
 
 // Reset the oric
