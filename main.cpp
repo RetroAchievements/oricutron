@@ -1446,11 +1446,6 @@ int main( int argc, char *argv[] )
 
         if( framedone )
         {
-#if USE_RETROACHIEVEMENTS
-            RA_HandleHTTPResults();
-
-            RA_DoAchievementsFrame();
-#endif
           nextframe_us += oric.vid_freq ? 20000LL : 16667LL;
           nextframe_ms = (Uint32)(nextframe_us/1000LL);
 
@@ -1467,7 +1462,17 @@ int main( int argc, char *argv[] )
 
         if( needrender )
         {
+#if USE_RETROACHIEVEMENTS
+          RA_RenderOverlayFrame(NULL);
+#endif
+
           render( &oric );
+
+#if USE_RETROACHIEVEMENTS
+          // Render a second time to minimize flicker
+          RA_RenderOverlayFrame(NULL);
+#endif
+
           needrender = SDL_FALSE;
         }
 
@@ -1504,6 +1509,11 @@ int main( int argc, char *argv[] )
               SDL_Delay(nextframe_ms-now);
             }
           }
+
+#if USE_RETROACHIEVEMENTS
+          RA_HandleHTTPResults();
+          RA_DoAchievementsFrame();
+#endif
           framedone = SDL_FALSE;
         }
 
@@ -1527,7 +1537,7 @@ int main( int argc, char *argv[] )
           case SDL_SYSWMEVENT:
             if (event.syswm.msg->msg.win.msg == WM_COMMAND)
             {
-                RA_HandleMenuEvent(LOWORD(event.syswm.msg->msg.win.wParam));
+                RA_HandleMenuEvent(event.syswm.msg->msg.win.wParam);
             }
             break;
 #endif
