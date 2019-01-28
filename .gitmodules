@@ -1,8 +1,8 @@
 [submodule "vcpkg"]
 	path = vcpkg
-	url = git@github.com:Microsoft/vcpkg.git
+	url = https://github.com/Microsoft/vcpkg.git
 
 [submodule "RAIntegration"]
 	path = RAIntegration
-	url = git@github.com:rzumer/RAIntegration.git
+	url = https://github.com/rzumer/RAIntegration.git
 	branch = oric
