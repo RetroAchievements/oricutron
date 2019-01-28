@@ -20,6 +20,7 @@ bool should_activate = true;
 
 bool confirmed_quitting = false;
 bool is_initialized = false;
+bool can_hotswap_tapes = true; // Allow tape hot-swapping until loaded
 
 static HDC main_hdc;
 static machine *active_machine;
@@ -237,10 +238,14 @@ int RA_PrepareLoadNewRom(const char *file_name, FileType file_type)
     {
         if (loaded_title->title_id != loading_file.title_id || loaded_title->file_type != loading_file.file_type)
         {
-            if (!RA_WarnDisableHardcore("load a new title without ejecting all images and hard-resetting the emulator"))
+            // Allow hot-swapping to unrecognized files for tape media, in order to support save/load systems
+            if ((!can_hotswap_tapes && loading_file.title_id != 0) || loading_file.file_type != FileType::TAPE)
             {
-                free_file_info(&loading_file);
-                return FALSE; // Interrupt loading
+                if (!RA_WarnDisableHardcore("load a new title without ejecting all images and hard-resetting the emulator"))
+                {
+                    free_file_info(&loading_file);
+                    return FALSE; // Interrupt loading
+                }
             }
         }
     }
@@ -280,7 +285,6 @@ void RA_CommitLoadNewRom()
     {
         // Initialize title data in the achievement system
         RA_ActivateGame(loading_file.title_id);
-        should_activate = true;
     }
 
     // Clear loading data
@@ -364,6 +368,8 @@ void RA_ProcessReset()
         }
     }
 
+    RA_ToggleTapeHotSwapping(true);
+
     RA_OnReset();
 }
 
@@ -411,6 +417,11 @@ int RA_ConfirmQuit()
         confirmed_quitting = RA_ConfirmLoadNewRom(true);
 
     return confirmed_quitting;
+}
+
+void RA_ToggleTapeHotSwapping(int enabled)
+{
+    can_hotswap_tapes = enabled;
 }
 
 #endif

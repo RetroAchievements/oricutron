@@ -1207,6 +1207,10 @@ void tape_patches( struct machine *oric )
             oric->cpu.write( &oric->cpu, oric->pch_fd_getname_addr, 0 );
           }
         }
+
+#if USE_RETROACHIEVEMENTS
+        RA_ToggleTapeHotSwapping(false);
+#endif
       }
       else if( ( ( oric->cpu.calcpc == oric->pch_fd_csave_getname_pc ) ||
                  ( oric->cpu.calcpc == oric->pch_fd_store_getname_pc ) ) &&

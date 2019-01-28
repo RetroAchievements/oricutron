@@ -38,6 +38,7 @@ extern FileInfo *loaded_title;
 
 extern bool confirmed_quitting;
 extern bool is_initialized;
+extern bool can_hotswap_tapes;
 
 void reset_file_info(FileInfo *file);
 void free_file_info(FileInfo *file);
@@ -78,6 +79,7 @@ void RA_ProcessReset();
 int RA_HandleMenuEvent(int id);
 void RA_RenderOverlayFrame(HDC hdc);
 int RA_ConfirmQuit();
+void RA_ToggleTapeHotSwapping(int enabled);
 
 #endif /* RETROACHIEVEMENTS_H */
 
