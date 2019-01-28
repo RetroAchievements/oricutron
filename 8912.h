@@ -114,8 +114,6 @@ struct ay8912
 extern SDL_AudioSpec obtained;
 extern struct avi_handle *vidcap;
 
-extern SDL_AudioCVT cvt;
-
 extern Sint16 soundsilence;
 extern SDL_bool soundavailable, soundon, warpspeed;
 
