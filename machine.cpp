@@ -57,6 +57,10 @@ extern "C"
 #include "keyboard.h"
 #include "avi.h"
 
+#if USE_RETROACHIEVEMENTS
+#include "retroachievements.h"
+#endif
+
 extern SDL_bool warpspeed, soundavailable, soundon;
 extern char diskpath[], diskfile[], filetmp[];
 extern char telediskpath[], telediskfile[];
@@ -1926,10 +1930,19 @@ void swapmach( struct machine *oric, struct osdmenuitem *mitem, int which )
   clear_textzone( oric, TZ_DISK );
 
   mon_state_reset( oric );
+
+#if USE_RETROACHIEVEMENTS
+  RA_ClearMemoryBanks();
+#endif
+
   if( !init_machine( oric, which, (SDL_bool)(which!=oric->type) ) )
   {
     shut();
     exit( EXIT_FAILURE );
   }
+
+#if USE_RETROACHIEVEMENTS
+  RA_InitMemory();
+#endif
 }
 
