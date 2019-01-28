@@ -245,7 +245,11 @@ struct osdmenuitem mainitems[] = { { "Insert tape...",         "T",    't',     
                                    { OSDMENUBAR,               NULL,   0,        NULL,            0, 0 },
                                    { "Monitor",                "[F2]", SDLK_F2,  setemumode,      EM_DEBUG, 0 },
                                    { "Reset Button NMI",       "[F3]", SDLK_F3,  softresetoric,       0, 0 },
+#if USE_RETROACHIEVEMENTS
+                                   { "Hard Reset + Eject All", "[F4]", SDLK_F4,  resetoric,       0, 0 },
+#else
                                    { "Hard Reset",             "[F4]", SDLK_F4,  resetoric,       0, 0 },
+#endif
                                    { "Back",                   "\x17", SDLK_BACKSPACE,setemumode, EM_RUNNING, 0 },
                                    { OSDMENUBAR,               NULL,   0,        NULL,            0, 0 },
                                    { "About",                  NULL,   0,        gotomenu,        5, 0 },
@@ -1388,6 +1392,12 @@ void resetoric( struct machine *oric, struct osdmenuitem *mitem, int dummy )
   setemumode( oric, NULL, EM_RUNNING );
 
 #if USE_RETROACHIEVEMENTS
+  disk_eject(oric, 0);
+  disk_eject(oric, 1);
+  disk_eject(oric, 2);
+  disk_eject(oric, 3);
+  tape_eject(oric);
+
   RA_ProcessReset();
 #endif
 }

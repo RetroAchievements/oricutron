@@ -1529,7 +1529,7 @@ int main( int argc, char *argv[] )
 #else
           // Push a dummy SDL event to redraw window content
           SDL_Event wm_event = SDL_Event();
-          wm_event.type = SDL_COMPAT_ACTIVEEVENT;
+          wm_event.type = SDL_WINDOWEVENT;
           SDL_PushEvent(&wm_event);
 #endif
 #endif
