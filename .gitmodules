@@ -1,7 +1,3 @@
-[submodule "vcpkg"]
-	path = vcpkg
-	url = https://github.com/Microsoft/vcpkg.git
-
 [submodule "RAIntegration"]
 	path = RAIntegration
 	url = https://github.com/rzumer/RAIntegration.git
