@@ -1473,14 +1473,9 @@ int main( int argc, char *argv[] )
 
         if( needrender )
         {
-#if USE_RETROACHIEVEMENTS
-          RA_RenderOverlayFrame(NULL);
-#endif
-
           render( &oric );
 
 #if USE_RETROACHIEVEMENTS
-          // Render a second time to minimize flicker
           RA_RenderOverlayFrame(NULL);
 #endif
 
