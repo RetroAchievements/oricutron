@@ -48,11 +48,17 @@ void free_file_info(FileInfo *file)
 
 unsigned char MainRAMReader(size_t nOffs)
 {
+    if (!active_machine || active_machine->memsize < nOffs)
+        return 0;
+
     return active_machine->mem[nOffs];
 }
 
 void MainRAMWriter(size_t nOffs, unsigned char nVal)
 {
+    if (!active_machine || active_machine->memsize < nOffs)
+        return;
+
     *(active_machine->mem + nOffs) = nVal;
 }
 
