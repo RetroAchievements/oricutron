@@ -193,7 +193,7 @@ if "$(Configuration.Contains('Release'))"=="True" ( if "$(Platform)"=="x64" ( co
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\vcpkg\installed\x86-windows\include\SDL2;..\..\RA_Interface</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vcpkg\installed\x86-windows\include\SDL2;..\..\RAInterface</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SDL_MAIN_HANDLED=1;__OPENGL_AVAILABLE__;_MBCS;WIN32;WANT_WMINFO;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;__CBCOPY__;__CBPASTE__;APP_NAME_FULL="Oricutron 1.2";APP_YEAR="2015";VERSION_COPYRIGHTS="Oricutron 1.2.0 (c)2015 Peter Gordon (pete@petergordon.org.uk)";USE_RETROACHIEVEMENTS;USE_MENUBAR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions>/we4013 /we4115 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>

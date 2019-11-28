@@ -72,9 +72,6 @@
     <ClCompile Include="..\..\gui_beos.cpp">
       <Filter>Source Files\gui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\RAIntegration\src\RA_Interface.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\retroachievements.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -180,6 +177,9 @@
     <ClCompile Include="..\..\font.h">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\RAInterface\RA_Interface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\6502.h">
@@ -263,9 +263,6 @@
     <ClInclude Include="..\..\6551.h">
       <Filter>Header Files\acia</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\RAIntegration\src\RA_Interface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\retroachievements.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -273,6 +270,9 @@
       <Filter>Header Files\gui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\8912.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\RAInterface\RA_Interface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
