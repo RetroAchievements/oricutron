@@ -102,7 +102,12 @@ void RebuildMenu()
 {
     // get main menu handle
     HMENU hMainMenu = GetMenu(g_SDL_Window);
-    if (!hMainMenu) return;
+
+    if (!hMainMenu) {
+        hMainMenu = CreateMenu();
+        SetMenu(g_SDL_Window, hMainMenu);
+        SDL_EventState(SDL_SYSWMEVENT, SDL_ENABLE);
+    }
 
     // get file menu index
     int index = GetMenuItemIndex(hMainMenu, "&RetroAchievements");
@@ -194,8 +199,11 @@ void RA_InitUI(machine *oric)
 {
     active_machine = oric;
 
-    RebuildMenu();
-    RA_InitMemory();
+    RA_UpdateHWnd(g_SDL_Window);
+
+    if (!fullscreen) {
+        RebuildMenu();
+    }
 
     if (main_hdc)
         ReleaseDC(g_SDL_Window, main_hdc);

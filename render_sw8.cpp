@@ -39,6 +39,10 @@ extern "C"
 #include "render_sw8.h"
 #include "ula.h"
 
+#if USE_RETROACHIEVEMENTS
+#include "retroachievements.h"
+#endif
+
 // this *should* be 16, but on AmigaOS that messes
 // with the pointer colours..
 #define GPAL_FIRSTPEN 20
@@ -462,6 +466,11 @@ SDL_bool init_render_sw8( struct machine *oric )
   offset_top = (240 - 226) * screen->pitch + 80;
   
   ula_set_dirty( oric );
+
+#if USE_RETROACHIEVEMENTS
+  init_gui_native(oric);
+  RA_InitUI(oric);
+#endif
   
   // Job done
   return SDL_TRUE;

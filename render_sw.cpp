@@ -39,6 +39,10 @@ extern "C"
 #include "render_sw.h"
 #include "ula.h"
 
+#if USE_RETROACHIEVEMENTS
+#include "retroachievements.h"
+#endif
+
 static struct SDL_Surface *screen;
 static Uint32 gpal[NUM_GUI_COLS];
 
@@ -602,6 +606,11 @@ SDL_bool init_render_sw( struct machine *oric )
   offset_top += pixel_size * 80;
 
   ula_set_dirty( oric );
+
+#if USE_RETROACHIEVEMENTS
+  init_gui_native(oric);
+  RA_InitUI(oric);
+#endif
 
   // Job done
   return SDL_TRUE;

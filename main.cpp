@@ -1124,6 +1124,7 @@ SDL_bool init( struct machine *oric, int argc, char *argv[] )
 #if USE_RETROACHIEVEMENTS
   RA_InitSystem();
   RA_InitUI(oric);
+  RA_InitMemory();
 #endif
 
   if( sto->start_disk[0] )

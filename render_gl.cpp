@@ -67,6 +67,10 @@ extern "C"
 #include "machine.h"
 #include "ula.h"
 
+#if USE_RETROACHIEVEMENTS
+#include "retroachievements.h"
+#endif
+
 #define TEX_VIDEO     (0)
 #define TEX_SCANLINES (1)
 #define TEX_STATUS    (2)
@@ -611,6 +615,11 @@ SDL_bool init_render_gl( struct machine *oric )
   clrcol[2] = ((float)sgpal[0*3+2])/255.0f;
 
   ula_set_dirty( oric );
+
+#if USE_RETROACHIEVEMENTS
+  init_gui_native(oric);
+  RA_InitUI(oric);
+#endif
 
   return SDL_TRUE;
 }

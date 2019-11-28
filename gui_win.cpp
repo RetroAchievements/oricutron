@@ -53,8 +53,10 @@ static char* text = NULL;
 
 static void init_clipboard(void)
 {
+#if !USE_RETROACHIEVEMENTS
   if(initialized)
     return;
+#endif
   
   /* Grab the window manager specific information */
   SDL_SysWMinfo info;
@@ -66,15 +68,6 @@ static void init_clipboard(void)
     g_SDL_Window = info.window;
 #else
     g_SDL_Window = info.info.win.window;
-#endif
-
-#if USE_RETROACHIEVEMENTS
-    // Create an empty menu bar to hold the RetroAchievements menu
-    HMENU menubar = CreateMenu();
-    SetMenu(g_SDL_Window, menubar);
-
-    // Enable WinAPI events processing
-    SDL_EventState(SDL_SYSWMEVENT, SDL_ENABLE);
 #endif
 
     initialized = SDL_TRUE;
