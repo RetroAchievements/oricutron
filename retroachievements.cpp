@@ -399,17 +399,27 @@ int RA_HandleMenuEvent(int id)
     return FALSE;
 }
 
-static unsigned long last_tick = timeGetTime(); // Last call time of RA_RenderOverlayFrame()
-void RA_RenderOverlayFrame(HDC hdc)
+static bool paused = false;
+void RA_UpdateOverlay()
 {
-    if (!hdc)
-        hdc = main_hdc;
+    bool pause_now = (bool)(GetKeyState(VK_PAUSE) & WM_KEYDOWN);
 
-    float delta_time = (timeGetTime() - last_tick) / 1000.0f;
-
-    int width = 640, height = 480; // no scaling options
-
-    RECT window_size = { 0, 0, width, height };
+    if (pause_now)
+    {
+        if (!paused)
+        {
+            CausePause();
+            RA_SetPaused(true);
+        }
+    }
+    else
+    {
+        if (paused)
+        {
+            CauseUnpause();
+            RA_SetPaused(false);
+        }
+    }
 
     ControllerInput input;
     input.m_bConfirmPressed = GetKeyState(VK_RETURN) & WM_KEYDOWN;
@@ -420,9 +430,7 @@ void RA_RenderOverlayFrame(HDC hdc)
     input.m_bUpPressed = GetKeyState(VK_UP) & WM_KEYDOWN;
     input.m_bDownPressed = GetKeyState(VK_DOWN) & WM_KEYDOWN;
     
-    RA_UpdateRenderOverlay(hdc, &input, delta_time, &window_size, fullscreen, active_machine->emu_mode == EM_PAUSED);
-
-    last_tick = timeGetTime();
+    RA_NavigateOverlay(&input);
 }
 
 int RA_ConfirmQuit()

@@ -77,7 +77,7 @@ void RA_CommitLoadNewRom();
 void RA_OnGameClose(int file_type);
 void RA_ProcessReset();
 int RA_HandleMenuEvent(int id);
-void RA_RenderOverlayFrame(HDC hdc);
+void RA_UpdateOverlay();
 int RA_ConfirmQuit();
 void RA_ToggleTapeHotSwapping(int enabled);
 

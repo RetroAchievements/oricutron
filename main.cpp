@@ -1440,6 +1440,15 @@ int main( int argc, char *argv[] )
       }
 
 #if USE_RETROACHIEVEMENTS
+      if (oric.emu_mode == EM_PAUSED) {
+      oric.emu_mode = EM_RUNNING;
+      frameloop_normal(&oric, &framedone, &needrender);
+      render(&oric);
+      oric.emu_mode = EM_PAUSED;
+      }
+
+      RA_UpdateOverlay();
+
       if (oric.emu_mode == EM_DEBUG)
       {
           if (!RA_WarnDisableHardcore("enter debug mode"))
@@ -1475,10 +1484,6 @@ int main( int argc, char *argv[] )
         if( needrender )
         {
           render( &oric );
-
-#if USE_RETROACHIEVEMENTS
-          RA_RenderOverlayFrame(NULL);
-#endif
 
           needrender = SDL_FALSE;
         }
@@ -1520,14 +1525,6 @@ int main( int argc, char *argv[] )
 #if USE_RETROACHIEVEMENTS
           RA_HandleHTTPResults();
           RA_DoAchievementsFrame();
-
-#if SDL_MAJOR_VERSION == 1
-#else
-          // Push a dummy SDL event to redraw window content
-          SDL_Event wm_event = SDL_Event();
-          wm_event.type = SDL_WINDOWEVENT;
-          SDL_PushEvent(&wm_event);
-#endif
 #endif
           framedone = SDL_FALSE;
         }
