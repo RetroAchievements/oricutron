@@ -145,6 +145,7 @@ copy "..\vcpkg\installed\x86-windows\bin\SDL.dll" "$(OutDir)\SDL.dll" ) )
 if "$(Configuration.Contains('Release'))"=="True" ( if "$(Platform)"=="x86" ( copy "..\vcpkg\installed\x86-windows\bin\SDL2.dll" "$(OutDir)\SDL2.dll"
 copy "..\vcpkg\installed\x86-windows\bin\SDL.dll" "$(OutDir)\SDL.dll" ) )
 if "$(Configuration.Contains('Release'))"=="True" ( if "$(Platform)"=="x64" ( copy "..\vcpkg\installed\x64-windows\bin\SDL2.dll" "$(OutDir)\SDL2.dll" ) )
+if not exist "$(OutDir)\overlay" ( xcopy "..\..\RAInterface\overlay" "$(OutDir)\overlay\" /E )
       </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
