@@ -399,26 +399,14 @@ int RA_HandleMenuEvent(int id)
     return FALSE;
 }
 
-static bool paused = false;
 void RA_UpdateOverlay()
 {
     bool pause_now = (bool)(GetKeyState(VK_PAUSE) & WM_KEYDOWN);
 
     if (pause_now)
     {
-        if (!paused)
-        {
-            CausePause();
-            RA_SetPaused(true);
-        }
-    }
-    else
-    {
-        if (paused)
-        {
-            CauseUnpause();
-            RA_SetPaused(false);
-        }
+        CausePause();
+        RA_SetPaused(true);
     }
 
     ControllerInput input;
